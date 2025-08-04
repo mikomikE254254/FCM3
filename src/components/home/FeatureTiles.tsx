@@ -166,8 +166,6 @@ const FeatureTiles: React.FC = () => {
             <Leaf size={32} className="text-white drop-shadow-lg group-hover:text-green-200 transition-colors duration-300 relative z-10" />
           </button>
           </div>
-        </div>
-      </section>
 
         <div className="container mx-auto max-w-6xl">
           <div 
