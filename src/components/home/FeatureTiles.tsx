@@ -167,6 +167,7 @@ const FeatureTiles: React.FC = () => {
           </button>
           </div>
         </div>
+      </section>
 
         <div className="container mx-auto max-w-6xl">
           <div 
