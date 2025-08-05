@@ -239,10 +239,10 @@ const MapPage: React.FC = () => {
                     icon: "🦋"
                   }
                 ].map((practice, index) => (
-                  <div key={index} className="bg-green-50 p-6 rounded-lg border border-green-200">
+                 <div key={index} className="bg-gray-900 p-6 rounded-lg border border-gray-700">
                     <div className="text-3xl mb-3">{practice.icon}</div>
-                    <h3 className="text-lg font-bold text-gray-800 mb-2">{practice.title}</h3>
-                    <p className="text-gray-600 text-sm">{practice.description}</p>
+                   <h3 className="text-lg font-bold text-white mb-2">{practice.title}</h3>
+                   <p className="text-gray-300 text-sm">{practice.description}</p>
                   </div>
                 ))}
               </div>
@@ -306,33 +306,13 @@ const MapPage: React.FC = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* Right Side - Details */}
-                <div className="space-y-6">
-                  
-                  {/* Performance Metrics */}
-                  <div className="bg-green-50 rounded-xl p-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                      <BarChart3 size={20} className="mr-2 text-green-700" />
-                      Performance Improvements
-                    </h3>
-                    
-                    <div className="space-y-4">
-                      {[
-                        { label: 'Yield Increase', value: generateSimpleMetrics(selectedRegion).yieldIncrease, color: 'bg-green-600' },
-                        { label: 'Pest Reduction', value: generateSimpleMetrics(selectedRegion).pestReduction, color: 'bg-blue-600' },
-                        { label: 'Profit Growth', value: generateSimpleMetrics(selectedRegion).profitGrowth, color: 'bg-purple-600' },
-                        { label: 'Chemical Reduction', value: generateSimpleMetrics(selectedRegion).chemicalReduction, color: 'bg-orange-600' }
-                      ].map((metric, idx) => (
-                        <div key={idx} className="flex items-center justify-between">
-                          <span className="text-gray-700 font-medium">{metric.label}</span>
-                          <div className="flex items-center space-x-3">
-                            <div className="w-24 bg-gray-200 rounded-full h-3">
+                       {/* Clean Header */}
+                       <div className="bg-white p-4 text-gray-800 relative overflow-hidden border-b border-gray-100">
                               <div 
                                 className={`h-3 rounded-full ${metric.color} transition-all duration-1000`}
-                                style={{ width: `${metric.value}%` }}
-                              ></div>
-                            </div>
+                             <h3 className="text-lg font-bold">{region.name}</h3>
+                             <div className="text-xl font-bold text-primary">{region.improvement}%</div>
+                             <div className="text-gray-600 text-xs">Growth</div>
                             <span className="text-gray-800 font-bold w-12 text-right">{metric.value}%</span>
                           </div>
                         </div>
