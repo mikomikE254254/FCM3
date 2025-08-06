@@ -122,9 +122,17 @@ const LLMOptimization: React.FC<LLMOptimizationProps> = ({
     ]
   };
 
+  // Ensure pageSpecificKeywords[pageType] is always an array to prevent iteration errors
+  const keywords = Array.isArray(pageSpecificKeywords[pageType]) ? pageSpecificKeywords[pageType] : [];
+  
+  // Log warning if no valid keywords found for the pageType
+  if (keywords.length === 0) {
+    console.warn(`No valid keywords found for pageType: ${pageType}`);
+  }
+
   const allKeywords = [
     ...baseKeywords,
-    ...pageSpecificKeywords[pageType],
+    ...keywords,
     ...additionalKeywords,
     ...productCategories
   ];
