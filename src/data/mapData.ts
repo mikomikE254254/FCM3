@@ -28,7 +28,9 @@
 export interface RegionData {
   id: string;
   name: string;
-  crop: string;
+  crops: string[];
+  description: string;
+  farms: number;
   improvement: number;
   population: number;
   position: {
@@ -47,7 +49,9 @@ export const regions: RegionData[] = [
   {
     id: 'nairobi',
     name: 'Nairobi County',
-    crop: 'Urban Farming',
+    crops: ['Urban Farming'],
+    description: 'Urban and peri-urban agriculture hub',
+    farms: 45,
     improvement: 32,
     population: 4.4,
     position: {
@@ -58,7 +62,9 @@ export const regions: RegionData[] = [
   {
     id: 'kiambu',
     name: 'Kiambu County',
-    crop: 'Coffee',
+    crops: ['Coffee'],
+    description: 'Premium coffee growing region',
+    farms: 78,
     improvement: 38,
     population: 2.4,
     position: {
@@ -69,7 +75,9 @@ export const regions: RegionData[] = [
   {
     id: 'nyeri',
     name: 'Nyeri County',
-    crop: 'Coffee ,Tea ,avocados',
+    crops: ['Coffee', 'Tea', 'Avocados'],
+    description: 'High altitude farming region',
+    farms: 62,
     improvement: 40,
     population: 0.8,
     position: {
@@ -80,7 +88,9 @@ export const regions: RegionData[] = [
   {
     id: 'marsabit',
     name: 'MURANGA-COUNTY',
-    crop: 'Mangoes',
+    crops: ['Mangoes'],
+    description: 'Tropical fruit production area',
+    farms: 34,
     improvement: 22,
     population: 0.5,
     position: {
@@ -97,7 +107,9 @@ export const regions: RegionData[] = [
   {
     id: 'nakuru',
     name: 'Nakuru County',
-    crop: 'ROSSES',
+    crops: ['Roses'],
+    description: 'Flower export hub',
+    farms: 89,
     improvement: 45,
     population: 2.2,
     position: {
@@ -108,7 +120,9 @@ export const regions: RegionData[] = [
   {
     id: 'uasin_gishu',
     name: 'Kirinyaga County',
-    crop: 'Avocados',
+    crops: ['Avocados'],
+    description: 'Large-scale avocado farming',
+    farms: 56,
     improvement: 47,
     population: 1.2,
     position: {
@@ -119,7 +133,9 @@ export const regions: RegionData[] = [
   {
     id: 'kilifi',
     name: 'Uasin-gishu County',
-    crop: 'Maize & Avocados',
+    crops: ['Maize', 'Avocados'],
+    description: 'Mixed farming systems',
+    farms: 67,
     improvement: 26,
     population: 1.5,
     position: {
@@ -136,7 +152,9 @@ export const regions: RegionData[] = [
   {
     id: 'mombasa',
     name: 'Makueni County',
-    crop: 'Mangoes & Oranges',
+    crops: ['Mangoes', 'Oranges'],
+    description: 'Citrus and tropical fruits',
+    farms: 43,
     improvement: 28,
     population: 1.2,
     position: {
@@ -147,7 +165,9 @@ export const regions: RegionData[] = [
   {
     id: 'machakos',
     name: 'Machakos County',
-    crop: 'Vegetables & Fruits',
+    crops: ['Vegetables', 'Fruits'],
+    description: 'Diverse horticultural production',
+    farms: 71,
     improvement: 31,
     population: 1.4,
     position: {
@@ -158,7 +178,9 @@ export const regions: RegionData[] = [
   {
     id: 'meru',
     name: 'Meru County',
-    crop: 'Avocadoes & Miraa',
+    crops: ['Avocados', 'Miraa'],
+    description: 'High-value crop specialization',
+    farms: 58,
     improvement: 35,
     population: 1.5,
     position: {
@@ -175,7 +197,9 @@ export const regions: RegionData[] = [
   {
     id: 'kisumu',
     name: 'Kitui County',
-    crop: 'Mangoes,tomatoes,oranges and pumpkins',
+    crops: ['Mangoes', 'Tomatoes', 'Oranges', 'Pumpkins'],
+    description: 'Diverse crop production',
+    farms: 52,
     improvement: 42,
     population: 1.2,
     position: {
@@ -186,7 +210,9 @@ export const regions: RegionData[] = [
   {
     id: 'kakamega',
     name: 'Embu County',
-    crop: 'coffee',
+    crops: ['Coffee'],
+    description: 'Traditional coffee growing area',
+    farms: 39,
     improvement: 39,
     population: 2.0,
     position: {
