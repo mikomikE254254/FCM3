@@ -49,45 +49,57 @@ const MapPage: React.FC = () => {
           />
 
           {/* Regions Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 relative">
             {regions.map((region, index) => (
               <div
                 key={index}
-                className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
+                className="relative rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105 group"
                 style={{
-                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)'
+                  boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+                  height: '400px'
                 }}
               >
-                {/* Header */}
-                <div className="bg-white p-6 relative">
-                  <div className="flex items-center gap-3 mb-2">
-                    <MapPin className="text-green-600" size={24} />
-                    <h3 className="text-xl font-bold text-gray-800">{region.name}</h3>
-                  </div>
-                  <p className="text-gray-700 mb-1">{region.description}</p>
-                  <p className="text-sm text-gray-600">Farms: {region.farms}</p>
-                </div>
-
+                {/* Background Image */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{
+                    backgroundImage: 'url(/dcc.jpg)'
+                  }}
+                />
+                
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                
                 {/* Content */}
-                <div className="p-6 pt-0">
-                  <div className="space-y-3">
+                <div className="absolute inset-0 p-6 flex flex-col justify-between text-white">
+                  {/* Top Section */}
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <MapPin className="text-white" size={20} />
+                      </div>
+                      <h3 className="text-xl font-bold text-white drop-shadow-lg">{region.name}</h3>
+                    </div>
+                    <p className="text-white/90 mb-2 drop-shadow-md">{region.description}</p>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1 inline-block">
+                      <p className="text-sm text-white/90">Farms: {region.farms}</p>
+                    </div>
+                  </div>
+
+                  {/* Bottom Section */}
+                  <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">Main Crops:</h4>
+                      <h4 className="font-semibold text-white mb-2 drop-shadow-md">Main Crops:</h4>
                       <div className="flex flex-wrap gap-2">
                         {region.crops.map((crop, cropIndex) => (
                           <span
                             key={cropIndex}
-                            className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium"
+                            className="px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium border border-white/30"
                           >
                             {crop}
                           </span>
                         ))}
                       </div>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">Climate:</h4>
-                      <p className="text-gray-600 text-sm">{region.climate}</p>
                     </div>
                   </div>
                 </div>

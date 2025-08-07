@@ -124,47 +124,47 @@ const PWAInstallPrompt: React.FC = () => {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 max-w-sm animate-slideInUp">
-      <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl shadow-2xl border border-orange-400 overflow-hidden transform transition-all duration-300 hover:scale-105 relative">
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200 overflow-hidden transform transition-all duration-300 hover:scale-105 relative">
         
-        {/* Mango background image */}
+        {/* Produce background image */}
         <div 
-          className="absolute inset-0 opacity-20 bg-cover bg-center rounded-2xl"
+          className="absolute inset-0 opacity-30 bg-cover bg-center rounded-2xl"
           style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/918327/pexels-photo-918327.jpeg?auto=compress&cs=tinysrgb&w=400)'
+            backgroundImage: 'url(https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=400)'
           }}
         ></div>
         
         {/* Header with FarmTrack branding */}
-        <div className="p-4 text-white relative overflow-hidden z-10">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-10 translate-x-10"></div>
-          <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/10 rounded-full translate-y-8 -translate-x-8"></div>
+        <div className="p-4 text-gray-800 relative overflow-hidden z-10">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/10 rounded-full -translate-y-10 translate-x-10"></div>
+          <div className="absolute bottom-0 left-0 w-16 h-16 bg-green-500/10 rounded-full translate-y-8 -translate-x-8"></div>
           
           <div className="relative z-10">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg relative overflow-hidden">
+                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center shadow-lg relative overflow-hidden">
                   <div 
-                    className="absolute inset-0 bg-cover bg-center opacity-30"
+                    className="absolute inset-0 bg-cover bg-center opacity-20"
                     style={{
-                      backgroundImage: 'url(https://images.pexels.com/photos/918327/pexels-photo-918327.jpeg?auto=compress&cs=tinysrgb&w=100)'
+                      backgroundImage: 'url(https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=100)'
                     }}
                   ></div>
                   <img
                     src="https://images.pexels.com/photos/32311431/pexels-photo-32311431.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                     alt="FarmTrack BioSciences app icon"
-                    className="w-6 h-6 object-contain relative z-10"
+                    className="w-6 h-6 object-contain relative z-10 filter drop-shadow-sm"
                   />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold">Get FarmTrack App</h3>
-                  <p className="text-white/90 text-xs">Access anywhere, anytime</p>
+                  <h3 className="text-lg font-bold text-gray-800">Get FarmTrack App</h3>
+                  <p className="text-gray-600 text-xs">Access anywhere, anytime</p>
                 </div>
               </div>
               <button
                 onClick={handleCancel}
-                className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors duration-300"
+                className="w-8 h-8 rounded-full bg-gray-200/50 hover:bg-gray-200/70 flex items-center justify-center transition-colors duration-300"
               >
-                <X size={16} />
+                <X size={16} className="text-gray-600" />
               </button>
             </div>
           </div>
@@ -194,7 +194,7 @@ const PWAInstallPrompt: React.FC = () => {
           <div className="flex space-x-2">
             <button
               onClick={handleInstallClick}
-              className="flex-1 bg-orange-600 text-white px-4 py-3 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+              className="flex-1 bg-green-600 text-white px-4 py-3 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:bg-green-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
             >
               <Download size={16} />
               <span>Install App</span>

@@ -5,6 +5,17 @@ import { Menu, X } from 'lucide-react';
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -28,13 +39,19 @@ const Header: React.FC = () => {
 
   return (
     <header 
-      className="fixed w-full z-50 transition-all duration-300"
+      className={`fixed w-full z-50 transition-all duration-500 ${
+        isScrolled 
+          ? 'bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-2xl' 
+          : 'bg-transparent'
+      }`}
       style={{ 
         height: '80px',
-        background: 'transparent'
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full">
+      {/* Glassy background overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-green-900/20 via-green-800/15 to-green-900/20 backdrop-blur-md"></div>
+      
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full">
         <div className="flex justify-between items-center h-full">
           {/* Company Logo and Name */}
           <Link 
@@ -46,7 +63,7 @@ const Header: React.FC = () => {
               <img
                 src="https://images.pexels.com/photos/32311431/pexels-photo-32311431.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 alt="FarmTrack BioSciences logo - organic biopesticides and sustainable agriculture"
-                className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-110"
+                className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-lg"
               />
             </div>
             <div className="flex flex-col">
@@ -56,8 +73,8 @@ const Header: React.FC = () => {
                   fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
                   fontWeight: 700,
                   fontSize: '24px',
-                  textShadow: '0 0 10px rgba(37, 211, 102, 0.3)',
-                  filter: 'drop-shadow(0 2px 4px rgba(37, 211, 102, 0.2))'
+                  textShadow: '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(37, 211, 102, 0.6)',
+                  filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
                 }}
               >
                 FarmTrack BioSciences
@@ -65,7 +82,7 @@ const Header: React.FC = () => {
               <span 
                 className="text-xs font-medium tracking-wide opacity-90 text-[#25D366]"
                 style={{
-                  textShadow: '0 0 5px rgba(37, 211, 102, 0.2)'
+                  textShadow: '0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(37, 211, 102, 0.4)'
                 }}
               >
                 Sustainable Agriculture Solutions
@@ -85,8 +102,8 @@ const Header: React.FC = () => {
                     to={link.path}
                     className={`relative px-4 py-3 font-medium transition-all duration-300 group ${
                       location.pathname === link.path
-                        ? 'text-[#25D366]'
-                        : 'text-[#25D366] hover:text-[#25D366]/80'
+                        ? 'text-white'
+                        : 'text-white/90 hover:text-white'
                     }`}
                     style={{ 
                       fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
@@ -95,8 +112,8 @@ const Header: React.FC = () => {
                       minHeight: '44px',
                       display: 'flex',
                       alignItems: 'center',
-                      textShadow: '0 0 8px rgba(37, 211, 102, 0.3)',
-                      filter: 'drop-shadow(0 1px 2px rgba(37, 211, 102, 0.2))'
+                      textShadow: '0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
+                      filter: 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3))'
                     }}
                     onClick={() => window.scrollTo(0, 0)}
                   >
@@ -127,8 +144,8 @@ const Header: React.FC = () => {
                     to={link.path}
                     className={`relative px-4 py-3 font-medium transition-all duration-300 group ${
                       location.pathname === link.path
-                        ? 'text-[#25D366]'
-                        : 'text-[#25D366] hover:text-[#25D366]/80'
+                        ? 'text-white'
+                        : 'text-white/90 hover:text-white'
                     }`}
                     style={{ 
                       fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
@@ -137,8 +154,8 @@ const Header: React.FC = () => {
                       minHeight: '44px',
                       display: 'flex',
                       alignItems: 'center',
-                      textShadow: '0 0 8px rgba(37, 211, 102, 0.3)',
-                      filter: 'drop-shadow(0 1px 2px rgba(37, 211, 102, 0.2))'
+                      textShadow: '0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
+                      filter: 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3))'
                     }}
                     onClick={() => window.scrollTo(0, 0)}
                   >
@@ -160,15 +177,15 @@ const Header: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden relative w-11 h-11 rounded-lg bg-white/20 backdrop-blur-sm hover:bg-white/30 flex items-center justify-center transition-all duration-300"
+            className="lg:hidden relative w-11 h-11 rounded-lg bg-white/10 backdrop-blur-md hover:bg-white/20 flex items-center justify-center transition-all duration-300 border border-white/20"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle mobile menu"
             style={{ minHeight: '44px', minWidth: '44px' }}
           >
             {mobileMenuOpen ? (
-              <X size={24} className="text-[#25D366]" />
+              <X size={24} className="text-white drop-shadow-lg" />
             ) : (
-              <Menu size={24} className="text-[#25D366]" />
+              <Menu size={24} className="text-white drop-shadow-lg" />
             )}
           </button>
         </div>
