@@ -5,25 +5,27 @@ import { Menu, X } from 'lucide-react';
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
 
-  // Handle scroll effect for floating header
+  // Handle scroll effect for showing/hiding header
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // Set scrolled state for styling
-      setIsScrolled(currentScrollY > 20);
-      
-      // Hide/show header based on scroll direction
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down - hide header
-        setIsVisible(false);
+      // Determine scroll direction
+      if (currentScrollY > lastScrollY) {
+        setScrollDirection('down');
       } else {
-        // Scrolling up - show header
+        setScrollDirection('up');
+      }
+      
+      // Show header only when scrolling up and not at the very top
+      if (scrollDirection === 'up' && currentScrollY > 100) {
         setIsVisible(true);
+      } else if (scrollDirection === 'down' || currentScrollY <= 50) {
+        setIsVisible(false);
       }
       
       setLastScrollY(currentScrollY);
@@ -31,7 +33,7 @@ const Header: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, scrollDirection]);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -55,62 +57,63 @@ const Header: React.FC = () => {
 
   return (
     <header 
-      className={`fixed w-full z-50 transition-all duration-500 ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
+      className={`fixed w-full z-50 transition-all duration-700 ease-in-out ${
+        isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
       }`}
       style={{ 
-        height: '80px',
-        top: isScrolled ? '10px' : '0px',
-        left: isScrolled ? '20px' : '0px',
-        right: isScrolled ? '20px' : '0px',
-        width: isScrolled ? 'calc(100% - 40px)' : '100%',
+        height: '56px', // Reduced by 30% from 80px
+        top: '12px',
+        left: '20px',
+        right: '20px',
+        width: 'calc(100% - 40px)',
       }}
     >
-      {/* Floating bubble background for desktop/tablet */}
+      {/* Transparent glossy background */}
       <div 
-        className={`absolute inset-0 transition-all duration-500 ${
-          isScrolled 
-            ? 'bg-white/95 backdrop-blur-xl border border-white/30 shadow-2xl rounded-2xl' 
-            : 'bg-gradient-to-r from-green-900/20 via-green-800/15 to-green-900/20 backdrop-blur-md'
-        }`}
+        className="absolute inset-0 transition-all duration-500"
+        style={{
+          background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          borderRadius: '16px',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.1)',
+        }}
       />
       
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full">
+      <div className="relative max-w-6xl mx-auto px-4 lg:px-6 h-full">
         <div className="flex justify-between items-center h-full">
           {/* Company Logo and Name */}
           <Link 
             to="/" 
-            className="flex items-center space-x-3 group"
+            className="flex items-center space-x-2 group"
             onClick={() => window.scrollTo(0, 0)}
           >
             <div className="relative">
               <img
                 src="https://images.pexels.com/photos/32311431/pexels-photo-32311431.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt="FarmTrack BioSciences logo - organic biopesticides and sustainable agriculture"
-                className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-lg"
+                alt="FarmTrack BioSciences logo"
+                className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-lg"
               />
             </div>
             <div className="flex flex-col">
               <span 
-                className={`font-bold transition-colors duration-300 group-hover:text-opacity-80 leading-tight ${
-                  isScrolled ? 'text-[#25D366]' : 'text-[#25D366]'
-                }`}
+                className="font-bold text-white transition-colors duration-300 group-hover:text-opacity-80 leading-tight"
                 style={{ 
                   fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
                   fontWeight: 700,
-                  fontSize: '24px',
-                  textShadow: isScrolled ? 'none' : '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(37, 211, 102, 0.6)',
-                  filter: isScrolled ? 'none' : 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
+                  fontSize: '18px', // Reduced from 24px
+                  textShadow: '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(37, 211, 102, 0.6)',
+                  filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
                 }}
               >
                 FarmTrack BioSciences
               </span>
               <span 
-                className={`text-xs font-medium tracking-wide opacity-90 ${
-                  isScrolled ? 'text-[#25D366]' : 'text-[#25D366]'
-                }`}
+                className="text-xs font-medium tracking-wide opacity-90 text-white"
                 style={{
-                  textShadow: isScrolled ? 'none' : '0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(37, 211, 102, 0.4)'
+                  fontSize: '10px', // Reduced from 12px
+                  textShadow: '0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(37, 211, 102, 0.4)'
                 }}
               >
                 Sustainable Agriculture Solutions
@@ -119,29 +122,29 @@ const Header: React.FC = () => {
           </Link>
 
           {/* Desktop Navigation - Split Layout */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 max-w-5xl mx-8">
+          <nav className="hidden lg:flex items-center justify-center flex-1 max-w-4xl mx-6">
             <div className="flex items-center justify-between w-full">
               
               {/* Left Navigation Links */}
-              <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-4">
                 {leftNavLinks.map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
-                    className={`relative px-4 py-3 font-medium transition-all duration-300 group ${
+                    className={`relative px-3 py-2 font-medium transition-all duration-300 group ${
                       location.pathname === link.path
-                        ? isScrolled ? 'text-[#25D366]' : 'text-white'
-                        : isScrolled ? 'text-gray-700 hover:text-[#25D366]' : 'text-white/90 hover:text-white'
+                        ? 'text-white'
+                        : 'text-white/90 hover:text-white'
                     }`}
                     style={{ 
                       fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
-                      fontSize: '16px',
+                      fontSize: '14px', // Reduced from 16px
                       fontWeight: 600,
-                      minHeight: '44px',
+                      minHeight: '36px', // Reduced from 44px
                       display: 'flex',
                       alignItems: 'center',
-                      textShadow: isScrolled ? 'none' : '0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
-                      filter: isScrolled ? 'none' : 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3))'
+                      textShadow: '0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
+                      filter: 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3))'
                     }}
                     onClick={() => window.scrollTo(0, 0)}
                   >
@@ -165,25 +168,25 @@ const Header: React.FC = () => {
               </div>
 
               {/* Right Navigation Links */}
-              <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-4">
                 {rightNavLinks.map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
-                    className={`relative px-4 py-3 font-medium transition-all duration-300 group ${
+                    className={`relative px-3 py-2 font-medium transition-all duration-300 group ${
                       location.pathname === link.path
-                        ? isScrolled ? 'text-[#25D366]' : 'text-white'
-                        : isScrolled ? 'text-gray-700 hover:text-[#25D366]' : 'text-white/90 hover:text-white'
+                        ? 'text-white'
+                        : 'text-white/90 hover:text-white'
                     }`}
                     style={{ 
                       fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
-                      fontSize: '16px',
+                      fontSize: '14px', // Reduced from 16px
                       fontWeight: 600,
-                      minHeight: '44px',
+                      minHeight: '36px', // Reduced from 44px
                       display: 'flex',
                       alignItems: 'center',
-                      textShadow: isScrolled ? 'none' : '0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
-                      filter: isScrolled ? 'none' : 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3))'
+                      textShadow: '0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
+                      filter: 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3))'
                     }}
                     onClick={() => window.scrollTo(0, 0)}
                   >
@@ -205,19 +208,15 @@ const Header: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className={`lg:hidden relative w-11 h-11 rounded-lg ${
-              isScrolled ? 'bg-gray-100 hover:bg-gray-200' : 'bg-white/10 backdrop-blur-md hover:bg-white/20'
-            } flex items-center justify-center transition-all duration-300 border ${
-              isScrolled ? 'border-gray-200' : 'border-white/20'
-            }`}
+            className="lg:hidden relative w-9 h-9 rounded-lg bg-white/10 backdrop-blur-md hover:bg-white/20 flex items-center justify-center transition-all duration-300 border border-white/20"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle mobile menu"
-            style={{ minHeight: '44px', minWidth: '44px' }}
+            style={{ minHeight: '36px', minWidth: '36px' }}
           >
             {mobileMenuOpen ? (
-              <X size={24} className={isScrolled ? 'text-gray-700' : 'text-white drop-shadow-lg'} />
+              <X size={20} className="text-white drop-shadow-lg" />
             ) : (
-              <Menu size={24} className={isScrolled ? 'text-gray-700' : 'text-white drop-shadow-lg'} />
+              <Menu size={20} className="text-white drop-shadow-lg" />
             )}
           </button>
         </div>
@@ -239,21 +238,21 @@ const Header: React.FC = () => {
         >
           {/* Mobile Menu Header */}
           <div 
-            className="flex items-center justify-between p-6 border-b border-gray-100"
-            style={{ height: '60px' }}
+            className="flex items-center justify-between p-4 border-b border-gray-100"
+            style={{ height: '48px' }}
           >
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               <img
                 src="https://images.pexels.com/photos/32311431/pexels-photo-32311431.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 alt="FarmTrack BioSciences logo"
-                className="h-8 w-8 object-contain"
+                className="h-6 w-6 object-contain"
               />
               <span 
                 className="font-bold"
                 style={{ 
                   color: '#25D366',
                   fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
-                  fontSize: '18px',
+                  fontSize: '16px',
                   fontWeight: 700
                 }}
               >
@@ -262,21 +261,21 @@ const Header: React.FC = () => {
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors duration-300"
-              style={{ minHeight: '44px', minWidth: '44px' }}
+              className="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors duration-300"
+              style={{ minHeight: '36px', minWidth: '36px' }}
             >
-              <X size={20} className="text-gray-600" />
+              <X size={16} className="text-gray-600" />
             </button>
           </div>
 
           {/* Mobile Menu Content */}
           <div className="flex flex-col h-full">
-            <nav className="flex-1 px-6 py-8 space-y-2">
+            <nav className="flex-1 px-4 py-6 space-y-1">
               {allNavLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`flex items-center px-4 py-4 rounded-xl font-medium transition-all duration-300 ${
+                  className={`flex items-center px-3 py-3 rounded-xl font-medium transition-all duration-300 ${
                     link.name === 'Bioproducts'
                       ? 'text-[#25D366] bg-white border-2 border-[#25D366] font-bold shadow-lg'
                       : location.pathname === link.path
@@ -285,9 +284,9 @@ const Header: React.FC = () => {
                   }`}
                   style={{ 
                     fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
-                    fontSize: '16px',
+                    fontSize: '14px',
                     fontWeight: link.name === 'Bioproducts' ? 700 : 600,
-                    minHeight: '44px'
+                    minHeight: '36px'
                   }}
                   onClick={() => {
                     setMobileMenuOpen(false);
@@ -300,13 +299,13 @@ const Header: React.FC = () => {
             </nav>
 
             {/* Mobile Contact Section */}
-            <div className="p-6 border-t border-gray-100 space-y-4">
+            <div className="p-4 border-t border-gray-100 space-y-3">
               <a
                 href="tel:+254711495522"
-                className="w-full bg-[#25D366] text-white px-6 py-4 rounded-xl font-semibold hover:bg-[#25D366]/90 transition-all duration-300 flex items-center justify-center"
+                className="w-full bg-[#25D366] text-white px-4 py-3 rounded-xl font-semibold hover:bg-[#25D366]/90 transition-all duration-300 flex items-center justify-center"
                 style={{ 
                   fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
-                  minHeight: '44px'
+                  minHeight: '36px'
                 }}
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -314,10 +313,10 @@ const Header: React.FC = () => {
               </a>
               <a
                 href="mailto:farmtrack.consulting@gmail.com"
-                className="w-full border-2 border-[#25D366] text-[#25D366] px-6 py-4 rounded-xl font-semibold hover:bg-[#25D366]/5 transition-all duration-300 flex items-center justify-center"
+                className="w-full border-2 border-[#25D366] text-[#25D366] px-4 py-3 rounded-xl font-semibold hover:bg-[#25D366]/5 transition-all duration-300 flex items-center justify-center"
                 style={{ 
                   fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
-                  minHeight: '44px'
+                  minHeight: '36px'
                 }}
                 onClick={() => setMobileMenuOpen(false)}
               >
