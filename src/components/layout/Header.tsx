@@ -6,16 +6,32 @@ const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Handle scroll effect
+  // Handle scroll effect for floating header
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      
+      // Set scrolled state for styling
+      setIsScrolled(currentScrollY > 20);
+      
+      // Hide/show header based on scroll direction
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down - hide header
+        setIsVisible(false);
+      } else {
+        // Scrolling up - show header
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -40,16 +56,24 @@ const Header: React.FC = () => {
   return (
     <header 
       className={`fixed w-full z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-2xl' 
-          : 'bg-transparent'
+        isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
       style={{ 
         height: '80px',
+        top: isScrolled ? '10px' : '0px',
+        left: isScrolled ? '20px' : '0px',
+        right: isScrolled ? '20px' : '0px',
+        width: isScrolled ? 'calc(100% - 40px)' : '100%',
       }}
     >
-      {/* Glassy background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-green-900/20 via-green-800/15 to-green-900/20 backdrop-blur-md"></div>
+      {/* Floating bubble background for desktop/tablet */}
+      <div 
+        className={`absolute inset-0 transition-all duration-500 ${
+          isScrolled 
+            ? 'bg-white/95 backdrop-blur-xl border border-white/30 shadow-2xl rounded-2xl' 
+            : 'bg-gradient-to-r from-green-900/20 via-green-800/15 to-green-900/20 backdrop-blur-md'
+        }`}
+      />
       
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full">
         <div className="flex justify-between items-center h-full">
@@ -68,21 +92,25 @@ const Header: React.FC = () => {
             </div>
             <div className="flex flex-col">
               <span 
-                className="font-bold transition-colors duration-300 group-hover:text-opacity-80 leading-tight text-[#25D366]"
+                className={`font-bold transition-colors duration-300 group-hover:text-opacity-80 leading-tight ${
+                  isScrolled ? 'text-[#25D366]' : 'text-[#25D366]'
+                }`}
                 style={{ 
                   fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
                   fontWeight: 700,
                   fontSize: '24px',
-                  textShadow: '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(37, 211, 102, 0.6)',
-                  filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
+                  textShadow: isScrolled ? 'none' : '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(37, 211, 102, 0.6)',
+                  filter: isScrolled ? 'none' : 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
                 }}
               >
                 FarmTrack BioSciences
               </span>
               <span 
-                className="text-xs font-medium tracking-wide opacity-90 text-[#25D366]"
+                className={`text-xs font-medium tracking-wide opacity-90 ${
+                  isScrolled ? 'text-[#25D366]' : 'text-[#25D366]'
+                }`}
                 style={{
-                  textShadow: '0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(37, 211, 102, 0.4)'
+                  textShadow: isScrolled ? 'none' : '0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(37, 211, 102, 0.4)'
                 }}
               >
                 Sustainable Agriculture Solutions
@@ -102,8 +130,8 @@ const Header: React.FC = () => {
                     to={link.path}
                     className={`relative px-4 py-3 font-medium transition-all duration-300 group ${
                       location.pathname === link.path
-                        ? 'text-white'
-                        : 'text-white/90 hover:text-white'
+                        ? isScrolled ? 'text-[#25D366]' : 'text-white'
+                        : isScrolled ? 'text-gray-700 hover:text-[#25D366]' : 'text-white/90 hover:text-white'
                     }`}
                     style={{ 
                       fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
@@ -112,8 +140,8 @@ const Header: React.FC = () => {
                       minHeight: '44px',
                       display: 'flex',
                       alignItems: 'center',
-                      textShadow: '0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
-                      filter: 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3))'
+                      textShadow: isScrolled ? 'none' : '0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
+                      filter: isScrolled ? 'none' : 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3))'
                     }}
                     onClick={() => window.scrollTo(0, 0)}
                   >
@@ -144,8 +172,8 @@ const Header: React.FC = () => {
                     to={link.path}
                     className={`relative px-4 py-3 font-medium transition-all duration-300 group ${
                       location.pathname === link.path
-                        ? 'text-white'
-                        : 'text-white/90 hover:text-white'
+                        ? isScrolled ? 'text-[#25D366]' : 'text-white'
+                        : isScrolled ? 'text-gray-700 hover:text-[#25D366]' : 'text-white/90 hover:text-white'
                     }`}
                     style={{ 
                       fontFamily: "'Montserrat', 'Open Sans', 'Roboto', sans-serif",
@@ -154,8 +182,8 @@ const Header: React.FC = () => {
                       minHeight: '44px',
                       display: 'flex',
                       alignItems: 'center',
-                      textShadow: '0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
-                      filter: 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3))'
+                      textShadow: isScrolled ? 'none' : '0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
+                      filter: isScrolled ? 'none' : 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3))'
                     }}
                     onClick={() => window.scrollTo(0, 0)}
                   >
@@ -177,15 +205,19 @@ const Header: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden relative w-11 h-11 rounded-lg bg-white/10 backdrop-blur-md hover:bg-white/20 flex items-center justify-center transition-all duration-300 border border-white/20"
+            className={`lg:hidden relative w-11 h-11 rounded-lg ${
+              isScrolled ? 'bg-gray-100 hover:bg-gray-200' : 'bg-white/10 backdrop-blur-md hover:bg-white/20'
+            } flex items-center justify-center transition-all duration-300 border ${
+              isScrolled ? 'border-gray-200' : 'border-white/20'
+            }`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle mobile menu"
             style={{ minHeight: '44px', minWidth: '44px' }}
           >
             {mobileMenuOpen ? (
-              <X size={24} className="text-white drop-shadow-lg" />
+              <X size={24} className={isScrolled ? 'text-gray-700' : 'text-white drop-shadow-lg'} />
             ) : (
-              <Menu size={24} className="text-white drop-shadow-lg" />
+              <Menu size={24} className={isScrolled ? 'text-gray-700' : 'text-white drop-shadow-lg'} />
             )}
           </button>
         </div>

@@ -33,6 +33,7 @@ export interface RegionData {
   farms: number;
   improvement: number;
   population: number;
+  image: string;
   position: {
     top: string;
     left: string;
@@ -54,6 +55,7 @@ export const regions: RegionData[] = [
     farms: 45,
     improvement: 32,
     population: 4.4,
+    image: 'https://images.pexels.com/photos/789750/pexels-photo-789750.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '60%',
       left: '53%'
@@ -67,6 +69,7 @@ export const regions: RegionData[] = [
     farms: 78,
     improvement: 38,
     population: 2.4,
+    image: 'https://images.pexels.com/photos/4022092/pexels-photo-4022092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '55%',
       left: '51%'
@@ -80,6 +83,7 @@ export const regions: RegionData[] = [
     farms: 62,
     improvement: 40,
     population: 0.8,
+    image: 'https://images.pexels.com/photos/4022092/pexels-photo-4022092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '47%',
       left: '53%'
@@ -93,6 +97,7 @@ export const regions: RegionData[] = [
     farms: 34,
     improvement: 22,
     population: 0.5,
+    image: 'https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '18%',
       left: '54%'
@@ -112,6 +117,7 @@ export const regions: RegionData[] = [
     farms: 89,
     improvement: 45,
     population: 2.2,
+    image: 'https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '53%',
       left: '42%'
@@ -125,6 +131,7 @@ export const regions: RegionData[] = [
     farms: 56,
     improvement: 47,
     population: 1.2,
+    image: 'https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '44%',
       left: '38%'
@@ -138,6 +145,7 @@ export const regions: RegionData[] = [
     farms: 67,
     improvement: 26,
     population: 1.5,
+    image: 'https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '72%',
       left: '70%'
@@ -157,6 +165,7 @@ export const regions: RegionData[] = [
     farms: 43,
     improvement: 28,
     population: 1.2,
+    image: 'https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '80%',
       left: '67%'
@@ -170,6 +179,7 @@ export const regions: RegionData[] = [
     farms: 71,
     improvement: 31,
     population: 1.4,
+    image: 'https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '65%',
       left: '58%'
@@ -183,6 +193,7 @@ export const regions: RegionData[] = [
     farms: 58,
     improvement: 35,
     population: 1.5,
+    image: 'https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '43%',
       left: '60%'
@@ -202,6 +213,7 @@ export const regions: RegionData[] = [
     farms: 52,
     improvement: 42,
     population: 1.2,
+    image: 'https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '50%',
       left: '27%'
@@ -215,6 +227,7 @@ export const regions: RegionData[] = [
     farms: 39,
     improvement: 39,
     population: 2.0,
+    image: 'https://images.pexels.com/photos/4022092/pexels-photo-4022092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     position: {
       top: '42%',
       left: '28%'

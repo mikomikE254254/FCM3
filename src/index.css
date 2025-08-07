@@ -289,6 +289,9 @@ body {
   .backdrop-blur-sm {
     backdrop-filter: blur(4px);
   }
+  .backdrop-blur-xl {
+    backdrop-filter: blur(24px);
+  }
 }
 
 /* Screen reader only content for SEO */
